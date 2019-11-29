@@ -24,7 +24,15 @@ module.exports = function (app) {
       var returnUnit = convertHandler.getReturnUnit(initUnit);
       var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
       
-      //res.json
+      if(convertHandler.ERROR_MSG.includes(toString)) {
+        res.json({error: toString});
+      } else {
+        res.json({initNum:parseFloat(convertHandler.fixNumber(initNum)), 
+                  initUnit: initUnit,
+                  returnNum: parseFloat(convertHandler.fixNumber(returnNum)),
+                  returnUnit: returnUnit,
+                  string: toString});
+      }
     });
     
 };
